@@ -1,0 +1,1 @@
+{"version":3,"file":"aiController.d.ts","sourceRoot":"","sources":["../../backend/controllers/aiController.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAgC5C,eAAO,MAAM,gBAAgB,GAAU,KAAK,OAAO,EAAE,KAAK,QAAQ,4DA4BjE,CAAC;AAKF,eAAO,MAAM,YAAY,GAAU,KAAK,OAAO,EAAE,KAAK,QAAQ,4DAiD7D,CAAC;AAKF,eAAO,MAAM,eAAe,GAAU,KAAK,OAAO,EAAE,KAAK,QAAQ,4DAsBhE,CAAC"}
