@@ -1,15 +1,14 @@
-import { Response } from 'express';
-import Post from '../models/Post.js';
-import { AuthRequest } from '../middleware/authMiddleware.js';
-import { io } from '../socket/socket.js';
+import { Response } from "express";
+import Post from "../models/Post.js";
+import { AuthRequest } from "../middleware/authMiddleware.js";
 
 // @desc    Fetch all posts
 // @route   GET /api/posts
 // @access  Public
 export const getPosts = async (req: AuthRequest, res: Response) => {
   const posts = await Post.find({})
-    .populate('user', 'name role')
-    .populate('comments.user', 'name role')
+    .populate("user", "name role")
+    .populate("comments.user", "name role")
     .sort({ createdAt: -1 });
   res.json(posts);
 };
@@ -25,14 +24,19 @@ export const createPost = async (req: AuthRequest, res: Response) => {
     type,
     title,
     content,
-    options: options ? options.map((opt: string) => ({ text: opt, votes: [] })) : [],
-    sentiment: sentiment || 'neutral',
+    options: options
+      ? options.map((opt: string) => ({ text: opt, votes: [] }))
+      : [],
+    sentiment: sentiment || "neutral",
   });
 
   const createdPost = await post.save();
-  const populatedPost = await Post.findById(createdPost._id).populate('user', 'name role');
-  
-  io.emit('new_post', populatedPost);
+  const populatedPost = await Post.findById(createdPost._id).populate(
+    "user",
+    "name role",
+  );
+
+  // Real-time update removed; handled by polling on frontend.
   res.status(201).json(populatedPost);
 };
 
@@ -44,21 +48,23 @@ export const votePost = async (req: AuthRequest, res: Response) => {
   const post = await Post.findById(req.params.id);
 
   if (!post) {
-    res.status(404).json({ message: 'Post not found' });
+    res.status(404).json({ message: "Post not found" });
     return;
   }
 
-  if (post.type === 'poll' && optionId) {
+  if (post.type === "poll" && optionId) {
     // Check if user already voted
     let hasVoted = false;
     post.options.forEach((opt: any) => {
-      if (opt.votes.some((v: any) => v.toString() === req.user._id.toString())) {
+      if (
+        opt.votes.some((v: any) => v.toString() === req.user._id.toString())
+      ) {
         hasVoted = true;
       }
     });
 
     if (hasVoted) {
-      res.status(400).json({ message: 'You have already voted' });
+      res.status(400).json({ message: "You have already voted" });
       return;
     }
 
@@ -66,22 +72,30 @@ export const votePost = async (req: AuthRequest, res: Response) => {
     if (option) {
       (option as any).votes.push(req.user._id);
       await post.save();
-      const updatedPost = await Post.findById(post._id).populate('user', 'name role').populate('comments.user', 'name role');
-      io.emit('update_post', updatedPost);
+      const updatedPost = await Post.findById(post._id)
+        .populate("user", "name role")
+        .populate("comments.user", "name role");
+      // Real-time update removed; handled by polling on frontend.
       res.json(updatedPost);
     } else {
-      res.status(404).json({ message: 'Option not found' });
+      res.status(404).json({ message: "Option not found" });
     }
-  } else if (post.type === 'issue' || post.type === 'discussion') {
+  } else if (post.type === "issue" || post.type === "discussion") {
     // Upvote issue or discussion
-    if (post.upvotes.some((id: any) => id.toString() === req.user._id.toString())) {
-      post.upvotes = post.upvotes.filter((id: any) => id.toString() !== req.user._id.toString());
+    if (
+      post.upvotes.some((id: any) => id.toString() === req.user._id.toString())
+    ) {
+      post.upvotes = post.upvotes.filter(
+        (id: any) => id.toString() !== req.user._id.toString(),
+      );
     } else {
       post.upvotes.push(req.user._id);
     }
     await post.save();
-    const updatedPost = await Post.findById(post._id).populate('user', 'name role').populate('comments.user', 'name role');
-    io.emit('update_post', updatedPost);
+    const updatedPost = await Post.findById(post._id)
+      .populate("user", "name role")
+      .populate("comments.user", "name role");
+    // Real-time update removed; handled by polling on frontend.
     res.json(updatedPost);
   }
 };
@@ -94,21 +108,21 @@ export const deletePost = async (req: AuthRequest, res: Response) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      res.status(404).json({ message: 'Post not found' });
+      res.status(404).json({ message: "Post not found" });
       return;
     }
 
     // Check if user is the author of the post
     if (post.user.toString() !== req.user._id.toString()) {
-      res.status(401).json({ message: 'Not authorized to delete this post' });
+      res.status(401).json({ message: "Not authorized to delete this post" });
       return;
     }
 
     await Post.deleteOne({ _id: post._id });
-    io.emit('delete_post', post._id);
-    res.json({ message: 'Post removed' });
+    // Real-time update removed; handled by polling on frontend.
+    res.json({ message: "Post removed" });
   } catch (error: any) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 // @route   POST /api/posts/:id/comment
@@ -125,10 +139,12 @@ export const commentPost = async (req: AuthRequest, res: Response) => {
 
     post.comments.push(comment as any);
     await post.save();
-    const updatedPost = await Post.findById(post._id).populate('user', 'name role').populate('comments.user', 'name role');
-    io.emit('update_post', updatedPost);
+    const updatedPost = await Post.findById(post._id)
+      .populate("user", "name role")
+      .populate("comments.user", "name role");
+    // Real-time update removed; handled by polling on frontend.
     res.status(201).json(updatedPost);
   } else {
-    res.status(404).json({ message: 'Post not found' });
+    res.status(404).json({ message: "Post not found" });
   }
 };

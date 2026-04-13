@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import api from '../api/axios';
-import PostCard from '../components/PostCard';
-import Loader from '../components/Loader';
-import { useAuthStore } from '../store/authStore';
-import toast from 'react-hot-toast';
-import { Mail, Shield } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import api from "../api/axios";
+import PostCard from "../components/PostCard";
+import Loader from "../components/Loader";
+import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
+import { Mail, Shield } from "lucide-react";
 
 const Profile = () => {
   const { user } = useAuthStore();
@@ -14,10 +14,10 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const { data } = await api.get('/users/profile');
+        const { data } = await api.get("/users/profile");
         setProfileData(data);
       } catch (error) {
-        toast.error('Failed to load profile');
+        toast.error("Failed to load profile");
       } finally {
         setLoading(false);
       }
@@ -33,7 +33,7 @@ const Profile = () => {
     <div className="max-w-3xl mx-auto px-4 py-8">
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
         <div className="flex items-center gap-6">
-          <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
             <span className="text-blue-600 font-bold text-3xl">
               {user?.name?.charAt(0)}
             </span>
@@ -58,10 +58,15 @@ const Profile = () => {
       {profileData?.posts?.length > 0 ? (
         <div className="space-y-6">
           {profileData.posts.map((post: any) => (
-            <PostCard 
-              key={post._id} 
-              post={post} 
-              onDelete={(id) => setProfileData({ ...profileData, posts: profileData.posts.filter((p: any) => p._id !== id) })}
+            <PostCard
+              key={post._id}
+              post={post}
+              onDelete={(id) =>
+                setProfileData({
+                  ...profileData,
+                  posts: profileData.posts.filter((p: any) => p._id !== id),
+                })
+              }
             />
           ))}
         </div>

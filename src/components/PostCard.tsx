@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
-import { formatDistanceToNow } from 'date-fns';
-import { MessageSquare, ArrowBigUp, AlertTriangle, CheckCircle, Info, Trash2 } from 'lucide-react';
-import PollOptions from './PollOptions';
-import api from '../api/axios';
-import { useAuthStore } from '../store/authStore';
-import toast from 'react-hot-toast';
+import React, { useState } from "react";
+import { formatDistanceToNow } from "date-fns";
+import {
+  MessageSquare,
+  ArrowBigUp,
+  AlertTriangle,
+  CheckCircle,
+  Info,
+  Trash2,
+} from "lucide-react";
+import PollOptions from "./PollOptions";
+import api from "../api/axios";
+import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
 
 interface PostCardProps {
   post: any;
@@ -14,66 +21,66 @@ interface PostCardProps {
 const PostCard: React.FC<PostCardProps> = ({ post, onDelete }) => {
   const { user } = useAuthStore();
   const [showComments, setShowComments] = useState(false);
-  const [commentText, setCommentText] = useState('');
+  const [commentText, setCommentText] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const isUpvoted = user ? post.upvotes?.includes(user._id) : false;
 
   const handleUpvote = async () => {
     if (!user) {
-      toast.error('Please login to upvote');
+      toast.error("Please login to upvote");
       return;
     }
     try {
       await api.post(`/posts/${post._id}/vote`);
     } catch (error: any) {
-      toast.error('Failed to upvote');
+      toast.error("Failed to upvote");
     }
   };
 
   const handleComment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      toast.error('Please login to comment');
+      toast.error("Please login to comment");
       return;
     }
     if (!commentText.trim()) return;
 
     try {
       // Moderate comment first
-      const modRes = await api.post('/ai/moderate', { text: commentText });
+      const modRes = await api.post("/ai/moderate", { text: commentText });
       if (modRes.data.isToxic) {
-        toast.error('Comment blocked: violates community guidelines');
+        toast.error("Comment blocked: violates community guidelines");
         return;
       }
 
       await api.post(`/posts/${post._id}/comment`, { text: commentText });
-      setCommentText('');
-      toast.success('Comment added');
+      setCommentText("");
+      toast.success("Comment added");
     } catch (error: any) {
-      toast.error('Failed to add comment');
+      toast.error("Failed to add comment");
     }
   };
 
   const handleDelete = async () => {
     try {
       await api.delete(`/posts/${post._id}`);
-      toast.success('Post deleted');
+      toast.success("Post deleted");
       if (onDelete) {
         onDelete(post._id);
       }
     } catch (error: any) {
-      toast.error('Failed to delete post');
+      toast.error("Failed to delete post");
     }
   };
 
   const getSentimentIcon = (sentiment: string) => {
     switch (sentiment) {
-      case 'positive':
+      case "positive":
         return <CheckCircle size={16} className="text-green-500" />;
-      case 'urgent':
+      case "urgent":
         return <AlertTriangle size={16} className="text-red-500" />;
-      case 'negative':
+      case "negative":
         return <Info size={16} className="text-orange-500" />;
       default:
         return null;
@@ -84,17 +91,24 @@ const PostCard: React.FC<PostCardProps> = ({ post, onDelete }) => {
     <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-4 transition-shadow hover:shadow-md">
       <div className="flex items-start gap-4">
         {/* Upvote Section for Issues and Discussions */}
-        {(post.type === 'issue' || post.type === 'discussion') && (
+        {(post.type === "issue" || post.type === "discussion") && (
           <div className="flex flex-col items-center gap-1 pt-1">
             <button
               onClick={handleUpvote}
               className={`p-1 rounded-md transition-colors ${
-                isUpvoted ? 'text-orange-500 bg-orange-50' : 'text-gray-400 hover:bg-gray-100'
+                isUpvoted
+                  ? "text-orange-500 bg-orange-50"
+                  : "text-gray-400 hover:bg-gray-100"
               }`}
             >
-              <ArrowBigUp size={24} className={isUpvoted ? 'fill-current' : ''} />
+              <ArrowBigUp
+                size={24}
+                className={isUpvoted ? "fill-current" : ""}
+              />
             </button>
-            <span className={`font-bold text-sm ${isUpvoted ? 'text-orange-600' : 'text-gray-600'}`}>
+            <span
+              className={`font-bold text-sm ${isUpvoted ? "text-orange-600" : "text-gray-600"}`}
+            >
               {post.upvotes?.length || 0}
             </span>
           </div>
@@ -103,15 +117,21 @@ const PostCard: React.FC<PostCardProps> = ({ post, onDelete }) => {
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2 text-sm text-gray-500">
-              <span className="font-semibold text-gray-900">{post.user?.name}</span>
+              <span className="font-semibold text-gray-900">
+                {post.user?.name}
+              </span>
               <span className="bg-gray-100 px-2 py-0.5 rounded-full text-xs capitalize">
                 {post.user?.role}
               </span>
               <span>•</span>
-              <span>{formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}</span>
+              <span>
+                {formatDistanceToNow(new Date(post.createdAt), {
+                  addSuffix: true,
+                })}
+              </span>
             </div>
             <div className="flex items-center gap-2">
-              {post.type === 'issue' && post.sentiment && (
+              {post.type === "issue" && post.sentiment && (
                 <div className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-full text-xs font-medium text-gray-600 border border-gray-200 capitalize">
                   {getSentimentIcon(post.sentiment)}
                   {post.sentiment}
@@ -130,9 +150,11 @@ const PostCard: React.FC<PostCardProps> = ({ post, onDelete }) => {
           </div>
 
           <h3 className="text-lg font-bold text-gray-900 mb-2">{post.title}</h3>
-          <p className="text-gray-700 whitespace-pre-wrap mb-4">{post.content}</p>
+          <p className="text-gray-700 whitespace-pre-wrap mb-4">
+            {post.content}
+          </p>
 
-          {post.type === 'poll' && <PollOptions post={post} />}
+          {post.type === "poll" && <PollOptions post={post} />}
 
           <div className="mt-4 flex items-center gap-4 border-t border-gray-100 pt-3">
             <button
@@ -167,7 +189,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onDelete }) => {
               <div className="space-y-3">
                 {post.comments?.map((comment: any) => (
                   <div key={comment._id} className="flex gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-linear-to-br from-blue-100 to-blue-200 flex items-center justify-center shrink-0">
                       <span className="text-blue-700 font-bold text-xs">
                         {comment.user?.name?.charAt(0)}
                       </span>
@@ -178,7 +200,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, onDelete }) => {
                           {comment.user?.name}
                         </span>
                         <span className="text-xs text-gray-500">
-                          {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
+                          {formatDistanceToNow(new Date(comment.createdAt), {
+                            addSuffix: true,
+                          })}
                         </span>
                       </div>
                       <p className="text-sm text-gray-700">{comment.text}</p>
@@ -186,7 +210,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, onDelete }) => {
                   </div>
                 ))}
                 {post.comments?.length === 0 && (
-                  <p className="text-center text-sm text-gray-500 py-2">No comments yet. Be the first!</p>
+                  <p className="text-center text-sm text-gray-500 py-2">
+                    No comments yet. Be the first!
+                  </p>
                 )}
               </div>
             </div>
@@ -198,8 +224,13 @@ const PostCard: React.FC<PostCardProps> = ({ post, onDelete }) => {
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl">
-            <h3 className="text-lg font-bold text-gray-900 mb-2">Delete Post</h3>
-            <p className="text-gray-600 mb-6">Are you sure you want to delete this post? This action cannot be undone.</p>
+            <h3 className="text-lg font-bold text-gray-900 mb-2">
+              Delete Post
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete this post? This action cannot be
+              undone.
+            </p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowDeleteModal(false)}

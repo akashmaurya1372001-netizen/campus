@@ -1,12 +1,11 @@
-import Post from '../models/Post.js';
-import { io } from '../socket/socket.js';
+import Post from "../models/Post.js";
 // @desc    Fetch all posts
 // @route   GET /api/posts
 // @access  Public
 export const getPosts = async (req, res) => {
     const posts = await Post.find({})
-        .populate('user', 'name role')
-        .populate('comments.user', 'name role')
+        .populate("user", "name role")
+        .populate("comments.user", "name role")
         .sort({ createdAt: -1 });
     res.json(posts);
 };
@@ -20,12 +19,14 @@ export const createPost = async (req, res) => {
         type,
         title,
         content,
-        options: options ? options.map((opt) => ({ text: opt, votes: [] })) : [],
-        sentiment: sentiment || 'neutral',
+        options: options
+            ? options.map((opt) => ({ text: opt, votes: [] }))
+            : [],
+        sentiment: sentiment || "neutral",
     });
     const createdPost = await post.save();
-    const populatedPost = await Post.findById(createdPost._id).populate('user', 'name role');
-    io.emit('new_post', populatedPost);
+    const populatedPost = await Post.findById(createdPost._id).populate("user", "name role");
+    // Real-time update removed; handled by polling on frontend.
     res.status(201).json(populatedPost);
 };
 // @desc    Vote on a post/poll
@@ -35,10 +36,10 @@ export const votePost = async (req, res) => {
     const { optionId } = req.body;
     const post = await Post.findById(req.params.id);
     if (!post) {
-        res.status(404).json({ message: 'Post not found' });
+        res.status(404).json({ message: "Post not found" });
         return;
     }
-    if (post.type === 'poll' && optionId) {
+    if (post.type === "poll" && optionId) {
         // Check if user already voted
         let hasVoted = false;
         post.options.forEach((opt) => {
@@ -47,22 +48,24 @@ export const votePost = async (req, res) => {
             }
         });
         if (hasVoted) {
-            res.status(400).json({ message: 'You have already voted' });
+            res.status(400).json({ message: "You have already voted" });
             return;
         }
         const option = post.options.id(optionId);
         if (option) {
             option.votes.push(req.user._id);
             await post.save();
-            const updatedPost = await Post.findById(post._id).populate('user', 'name role').populate('comments.user', 'name role');
-            io.emit('update_post', updatedPost);
+            const updatedPost = await Post.findById(post._id)
+                .populate("user", "name role")
+                .populate("comments.user", "name role");
+            // Real-time update removed; handled by polling on frontend.
             res.json(updatedPost);
         }
         else {
-            res.status(404).json({ message: 'Option not found' });
+            res.status(404).json({ message: "Option not found" });
         }
     }
-    else if (post.type === 'issue' || post.type === 'discussion') {
+    else if (post.type === "issue" || post.type === "discussion") {
         // Upvote issue or discussion
         if (post.upvotes.some((id) => id.toString() === req.user._id.toString())) {
             post.upvotes = post.upvotes.filter((id) => id.toString() !== req.user._id.toString());
@@ -71,8 +74,10 @@ export const votePost = async (req, res) => {
             post.upvotes.push(req.user._id);
         }
         await post.save();
-        const updatedPost = await Post.findById(post._id).populate('user', 'name role').populate('comments.user', 'name role');
-        io.emit('update_post', updatedPost);
+        const updatedPost = await Post.findById(post._id)
+            .populate("user", "name role")
+            .populate("comments.user", "name role");
+        // Real-time update removed; handled by polling on frontend.
         res.json(updatedPost);
     }
 };
@@ -83,20 +88,20 @@ export const deletePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
         if (!post) {
-            res.status(404).json({ message: 'Post not found' });
+            res.status(404).json({ message: "Post not found" });
             return;
         }
         // Check if user is the author of the post
         if (post.user.toString() !== req.user._id.toString()) {
-            res.status(401).json({ message: 'Not authorized to delete this post' });
+            res.status(401).json({ message: "Not authorized to delete this post" });
             return;
         }
         await Post.deleteOne({ _id: post._id });
-        io.emit('delete_post', post._id);
-        res.json({ message: 'Post removed' });
+        // Real-time update removed; handled by polling on frontend.
+        res.json({ message: "Post removed" });
     }
     catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 // @route   POST /api/posts/:id/comment
@@ -111,12 +116,14 @@ export const commentPost = async (req, res) => {
         };
         post.comments.push(comment);
         await post.save();
-        const updatedPost = await Post.findById(post._id).populate('user', 'name role').populate('comments.user', 'name role');
-        io.emit('update_post', updatedPost);
+        const updatedPost = await Post.findById(post._id)
+            .populate("user", "name role")
+            .populate("comments.user", "name role");
+        // Real-time update removed; handled by polling on frontend.
         res.status(201).json(updatedPost);
     }
     else {
-        res.status(404).json({ message: 'Post not found' });
+        res.status(404).json({ message: "Post not found" });
     }
 };
 //# sourceMappingURL=postController.js.map

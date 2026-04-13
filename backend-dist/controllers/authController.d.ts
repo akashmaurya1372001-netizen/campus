@@ -1,4 +1,4 @@
 import { Request, Response } from 'express';
-export declare const authUser: (req: Request, res: Response) => Promise<void>;
-export declare const registerUser: (req: Request, res: Response) => Promise<void>;
+export declare const authUser: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+export declare const registerUser: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
 //# sourceMappingURL=authController.d.ts.map

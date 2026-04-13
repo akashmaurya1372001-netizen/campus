@@ -105,3 +105,14 @@ npm run start
 - All API endpoints are available under `/api/*`.
 - The frontend is served at the root (`/`).
 - WebSocket and socket.io work out of the box in production.
+
+## Vercel Deployment
+
+1. Refactor backend endpoints into `/api` as serverless functions (see `/api/posts.ts`, `/api/auth.ts`n).
+2. Build the frontend: `npm run build` (Vercel will do this automatically).
+3. Push to GitHub and connect your repo to Vercel.
+4. Set environment variables (`MONGO_URI`, `JWT_SECRET`, `GEMINI_API_KEY`, etc.) in the Vercel dashboard.
+5. Add `vercel.json` for routing.
+6. WebSockets/socket.io are NOT supported on Vercel serverless. For real-time, use a third-party service or a different backend host.
+
+See `/api/posts.ts` and `/api/auth.ts` for Vercel-compatible API handler examples.
