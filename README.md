@@ -1,4 +1,4 @@
-# Campus Pulse AI
+# Campus Connect
 
 🚀 Smart University Feedback & Poll Platform
 
