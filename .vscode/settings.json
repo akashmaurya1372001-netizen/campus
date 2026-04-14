@@ -1,0 +1,11 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "off"
+  },
+  "css.lint.unknownAtRules": "ignore",
+  "tailwindCSS.lint.cssConflict": "ignore",
+  "tailwindCSS.lint.invalidApply": "ignore",
+  "tailwindCSS.lint.invalidScreen": "ignore",
+  "editor.formatOnSave": false,
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}

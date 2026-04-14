@@ -22,8 +22,8 @@ export default defineConfig(({ mode }) => {
           ? false
           : {
               host: "localhost",
-              port: 3000,
-              protocol: "ws",
+              port: 5173,
+             
             },
     },
   };
