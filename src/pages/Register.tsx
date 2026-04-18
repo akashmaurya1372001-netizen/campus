@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import api from '../api/axios';
-import { useAuthStore } from '../store/authStore';
-import toast from 'react-hot-toast';
-import { User, Mail, Lock, Shield, ArrowRight, Sparkles } from 'lucide-react';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../api/axios";
+import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
+import { User, Mail, Lock, Shield, ArrowRight, Sparkles } from "lucide-react";
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('student');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("student");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuthStore();
@@ -18,12 +18,17 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data } = await api.post('/auth/register', { name, email, password, role });
+      const { data } = await api.post("/auth/register", {
+        name,
+        email,
+        password,
+        role,
+      });
       login(data);
-      toast.success('Registered successfully');
-      navigate('/');
+      toast.success("Registered successfully");
+      navigate("/");
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to register');
+      toast.error(error.response?.data?.message || "Failed to register");
     } finally {
       setLoading(false);
     }
@@ -34,7 +39,7 @@ const Register = () => {
       {/* Decorative elements */}
       <div className="absolute top-10 left-10 w-40 h-40 bg-purple-300/20 rounded-full blur-2xl"></div>
       <div className="absolute bottom-10 right-10 w-40 h-40 bg-blue-300/20 rounded-full blur-2xl"></div>
-      
+
       <div className="max-w-md w-full space-y-8 bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/20 relative z-10">
         {/* Header */}
         <div>
@@ -42,11 +47,14 @@ const Register = () => {
             <Sparkles className="text-white w-8 h-8" />
           </div>
           <h2 className="text-center text-3xl font-bold text-gray-900 tracking-tight">
-            Join Campus Pulse
+            Join Campus connect
           </h2>
           <p className="mt-3 text-center text-sm text-gray-600">
-            Already have an account?{' '}
-            <Link to="/login" className="font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+            >
               Sign in
             </Link>
           </p>
@@ -57,7 +65,9 @@ const Register = () => {
           <div className="space-y-4">
             {/* Full Name */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Full Name
+              </label>
               <div className="relative">
                 <User className="absolute left-4 top-3.5 text-gray-400 w-5 h-5" />
                 <input
@@ -73,7 +83,9 @@ const Register = () => {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Campus Email</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Campus Email
+              </label>
               <div className="relative">
                 <Mail className="absolute left-4 top-3.5 text-gray-400 w-5 h-5" />
                 <input
@@ -92,7 +104,9 @@ const Register = () => {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Password
+              </label>
               <div className="relative">
                 <Lock className="absolute left-4 top-3.5 text-gray-400 w-5 h-5" />
                 <input
@@ -108,7 +122,9 @@ const Register = () => {
 
             {/* Role */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">I am a...</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                I am a...
+              </label>
               <div className="relative">
                 <Shield className="absolute left-4 top-3.5 text-gray-400 w-5 h-5 pointer-events-none" />
                 <select
@@ -148,7 +164,5 @@ const Register = () => {
     </div>
   );
 };
-
-
 
 export default Register;
