@@ -145,14 +145,8 @@ const Register = () => {
             disabled={loading}
             className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-linear-to-r from-purple-600 to-pink-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-70 transition-all mt-6"
           >
-            {loading ? (
-              <span>Creating Account...</span>
-            ) : (
-              <>
-                <span>Create Account</span>
-                <ArrowRight className="w-4 h-4" />
-              </>
-            )}
+            {loading ? "Creating Account..." : "Create Account"}
+            
           </button>
         </form>
 
