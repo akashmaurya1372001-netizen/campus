@@ -20,7 +20,7 @@ const startServer = async () => {
     const httpServer = createHttpServer(app);
     // Configure CORS for WebSocket support
     app.use(cors({
-        origin: ["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173", "http://127.0.0.1:3000"],
+        origin: ["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173", "http://127.0.0.1:3000","https://campus-git-main-akashmaurya1372001-netizens-projects.vercel.app/"],
         credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
         allowedHeaders: ["Content-Type", "Authorization"],
