@@ -32,22 +32,9 @@ const startServer = async () => {
     app.use("/api/ai", aiRoutes);
     app.use("/api/users", userRoutes);
     // Vite middleware for development
-    if (process.env.NODE_ENV !== "production") {
-        const vite = await createViteServer({
-            server: { middlewareMode: true },
-            appType: "spa",
-        });
-        app.use(vite.middlewares);
-    }
-    else {
-        // Production setup
-        const distPath = path.join(process.cwd(), "dist");
-        app.use(express.static(distPath));
-        // Note: Express v4 uses '*'
-        app.get("*", (req, res) => {
-            res.sendFile(path.join(distPath, "index.html"));
-        });
-    }
+    app.get("/", (req, res) => {
+  res.send("Campus API running");
+});
     app.use(notFound);
     app.use(errorHandler);
     const PORT = process.env.PORT || 3000;
