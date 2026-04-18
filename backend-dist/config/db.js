@@ -1,34 +1,14 @@
 import mongoose from "mongoose";
-import { MongoMemoryServer } from "mongodb-memory-server";
-let mongod = null;
-export const connectDB = async () => {
-    const uri = process.env.MONGO_URI;
-    // Try to connect to provided MongoDB URI (Atlas or local)
-    if (uri) {
-        try {
-            const conn = await mongoose.connect(uri, {
-                serverSelectionTimeoutMS: 5000, // Timeout faster
-                connectTimeoutMS: 5000,
-            });
-            console.log(`MongoDB Connected: ${conn.connection.host}`);
-            return;
-        }
-        catch (error) {
-            console.error(`Failed to connect to MongoDB: ${error.message}`);
-            // Continue to fallback
-        }
-    }
-    // Fallback to in-memory MongoDB
+const connectDB = async () => {
     try {
-        console.log("Using in-memory MongoDB for development...");
-        mongod = await MongoMemoryServer.create();
-        const memUri = mongod.getUri();
-        const conn = await mongoose.connect(memUri);
-        console.log(`In-memory MongoDB Connected: ${conn.connection.host}`);
+        const uri = process.env.MONGO_URI;
+        await mongoose.connect(uri);
+        console.log("MongoDB Connected");
     }
     catch (error) {
-        console.error(`Error starting in-memory MongoDB: ${error.message}`);
+        console.error("MongoDB connection error:", error);
         process.exit(1);
     }
 };
+export default connectDB;
 //# sourceMappingURL=db.js.map

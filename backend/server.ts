@@ -6,7 +6,7 @@ import { createServer as createHttpServer } from "http";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
-import connectDB  from "./config/db.ts";
+import connectDB  from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";

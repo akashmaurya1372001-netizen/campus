@@ -1,9 +1,6 @@
 import mongoose from 'mongoose';
 declare const Post: mongoose.Model<{
     type: "issue" | "poll" | "discussion";
-    user: mongoose.Types.ObjectId;
-    title: string;
-    content: string;
     options: mongoose.Types.DocumentArray<{
         text: string;
         votes: mongoose.Types.ObjectId[];
@@ -14,6 +11,9 @@ declare const Post: mongoose.Model<{
         text: string;
         votes: mongoose.Types.ObjectId[];
     }>;
+    user: mongoose.Types.ObjectId;
+    title: string;
+    content: string;
     comments: mongoose.Types.DocumentArray<{
         text: string;
         user: mongoose.Types.ObjectId;
@@ -30,9 +30,6 @@ declare const Post: mongoose.Model<{
     id: string;
 }, mongoose.Document<unknown, {}, {
     type: "issue" | "poll" | "discussion";
-    user: mongoose.Types.ObjectId;
-    title: string;
-    content: string;
     options: mongoose.Types.DocumentArray<{
         text: string;
         votes: mongoose.Types.ObjectId[];
@@ -43,6 +40,9 @@ declare const Post: mongoose.Model<{
         text: string;
         votes: mongoose.Types.ObjectId[];
     }>;
+    user: mongoose.Types.ObjectId;
+    title: string;
+    content: string;
     comments: mongoose.Types.DocumentArray<{
         text: string;
         user: mongoose.Types.ObjectId;
@@ -61,9 +61,6 @@ declare const Post: mongoose.Model<{
     timestamps: true;
 }> & Omit<{
     type: "issue" | "poll" | "discussion";
-    user: mongoose.Types.ObjectId;
-    title: string;
-    content: string;
     options: mongoose.Types.DocumentArray<{
         text: string;
         votes: mongoose.Types.ObjectId[];
@@ -74,6 +71,9 @@ declare const Post: mongoose.Model<{
         text: string;
         votes: mongoose.Types.ObjectId[];
     }>;
+    user: mongoose.Types.ObjectId;
+    title: string;
+    content: string;
     comments: mongoose.Types.DocumentArray<{
         text: string;
         user: mongoose.Types.ObjectId;
@@ -96,9 +96,6 @@ declare const Post: mongoose.Model<{
     timestamps: true;
 }, {
     type: "issue" | "poll" | "discussion";
-    user: mongoose.Types.ObjectId;
-    title: string;
-    content: string;
     options: mongoose.Types.DocumentArray<{
         text: string;
         votes: mongoose.Types.ObjectId[];
@@ -109,6 +106,9 @@ declare const Post: mongoose.Model<{
         text: string;
         votes: mongoose.Types.ObjectId[];
     }>;
+    user: mongoose.Types.ObjectId;
+    title: string;
+    content: string;
     comments: mongoose.Types.DocumentArray<{
         text: string;
         user: mongoose.Types.ObjectId;
@@ -123,9 +123,6 @@ declare const Post: mongoose.Model<{
     upvotes: mongoose.Types.ObjectId[];
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
     type: "issue" | "poll" | "discussion";
-    user: mongoose.Types.ObjectId;
-    title: string;
-    content: string;
     options: mongoose.Types.DocumentArray<{
         text: string;
         votes: mongoose.Types.ObjectId[];
@@ -136,6 +133,9 @@ declare const Post: mongoose.Model<{
         text: string;
         votes: mongoose.Types.ObjectId[];
     }>;
+    user: mongoose.Types.ObjectId;
+    title: string;
+    content: string;
     comments: mongoose.Types.DocumentArray<{
         text: string;
         user: mongoose.Types.ObjectId;
@@ -154,9 +154,6 @@ declare const Post: mongoose.Model<{
     timestamps: true;
 }> & Omit<{
     type: "issue" | "poll" | "discussion";
-    user: mongoose.Types.ObjectId;
-    title: string;
-    content: string;
     options: mongoose.Types.DocumentArray<{
         text: string;
         votes: mongoose.Types.ObjectId[];
@@ -167,6 +164,9 @@ declare const Post: mongoose.Model<{
         text: string;
         votes: mongoose.Types.ObjectId[];
     }>;
+    user: mongoose.Types.ObjectId;
+    title: string;
+    content: string;
     comments: mongoose.Types.DocumentArray<{
         text: string;
         user: mongoose.Types.ObjectId;
@@ -187,9 +187,6 @@ declare const Post: mongoose.Model<{
     id: string;
 }, unknown, {
     type: "issue" | "poll" | "discussion";
-    user: mongoose.Types.ObjectId;
-    title: string;
-    content: string;
     options: mongoose.Types.DocumentArray<{
         text: string;
         votes: mongoose.Types.ObjectId[];
@@ -200,6 +197,9 @@ declare const Post: mongoose.Model<{
         text: string;
         votes: mongoose.Types.ObjectId[];
     }>;
+    user: mongoose.Types.ObjectId;
+    title: string;
+    content: string;
     comments: mongoose.Types.DocumentArray<{
         text: string;
         user: mongoose.Types.ObjectId;
@@ -226,9 +226,6 @@ declare const Post: mongoose.Model<{
     __v: number;
 }>, {
     type: "issue" | "poll" | "discussion";
-    user: mongoose.Types.ObjectId;
-    title: string;
-    content: string;
     options: mongoose.Types.DocumentArray<{
         text: string;
         votes: mongoose.Types.ObjectId[];
@@ -239,6 +236,9 @@ declare const Post: mongoose.Model<{
         text: string;
         votes: mongoose.Types.ObjectId[];
     }>;
+    user: mongoose.Types.ObjectId;
+    title: string;
+    content: string;
     comments: mongoose.Types.DocumentArray<{
         text: string;
         user: mongoose.Types.ObjectId;

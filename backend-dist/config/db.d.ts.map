@@ -1,1 +1,1 @@
-{"version":3,"file":"db.d.ts","sourceRoot":"","sources":["../../backend/config/db.ts"],"names":[],"mappings":"AAKA,eAAO,MAAM,SAAS,qBA6BrB,CAAC"}
+{"version":3,"file":"db.d.ts","sourceRoot":"","sources":["../../backend/config/db.ts"],"names":[],"mappings":"AAEA,QAAA,MAAM,SAAS,qBAWd,CAAC;AAEF,eAAe,SAAS,CAAC"}
