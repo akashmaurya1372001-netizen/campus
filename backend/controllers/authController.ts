@@ -17,7 +17,7 @@ export const authUser = async (req: Request, res: Response) => {
 
     const user = await User.findOne({ email });
 
-    if (user && (await (user as any).matchPassword(password))) {
+    if (user && await user.matchPassword(password)) {
       return res.status(200).json({
         _id: user._id,
         name: user.name,
