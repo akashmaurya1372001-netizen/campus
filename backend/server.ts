@@ -22,9 +22,15 @@ const startServer = async () => {
 
   const app = express();
   const httpServer = createHttpServer(app);
-  // Initialize Socket.io
-
-  app.use(cors());
+  
+  // Configure CORS for WebSocket support
+  app.use(cors({
+    origin: ["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173", "http://127.0.0.1:3000"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }));
+  
   app.use(express.json());
 
   // API Routes

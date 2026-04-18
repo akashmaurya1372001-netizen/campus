@@ -6,6 +6,13 @@
   "tailwindCSS.lint.cssConflict": "ignore",
   "tailwindCSS.lint.invalidApply": "ignore",
   "tailwindCSS.lint.invalidScreen": "ignore",
+  "tailwindCSS.lint.classNameParsing": "ignore",
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "editor.formatOnSave": false,
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

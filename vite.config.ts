@@ -17,14 +17,15 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       middlewareMode: false,
-      hmr:
-        process.env.DISABLE_HMR === "true"
-          ? false
-          : {
-              host: "localhost",
-              port: 5173,
-             
-            },
+      hmr: {
+        host: "localhost",
+        port: 5173,
+        protocol: "ws",
+      },
+      cors: {
+        origin: "*",
+        credentials: true,
+      },
     },
   };
 });

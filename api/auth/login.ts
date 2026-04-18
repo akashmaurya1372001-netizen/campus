@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 import mongoose from "mongoose";
-import User from "../../../backend/models/User";
-import generateToken from "../../../backend/utils/generateToken";
+import User from "../../backend/models/User";
+import generateToken from "../../backend/utils/generateToken";
 
 let conn: typeof mongoose | null = null;
 async function connectDB() {
