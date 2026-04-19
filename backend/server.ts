@@ -1,36 +1,33 @@
 import express from "express";
 import dotenv from "dotenv";
-dotenv.config();
 import cors from "cors";
-import { createServer as createHttpServer } from "http";
-import { createServer as createViteServer } from "vite";
-import path from "path";
-import { fileURLToPath } from "url";
-import connectDB  from "./config/db.js";
+import connectDB from "./config/db.js";
+
 import authRoutes from "./routes/authRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+dotenv.config();
 
 const startServer = async () => {
   await connectDB();
 
   const app = express();
-  const httpServer = createHttpServer(app);
-  
-  // Configure CORS for WebSocket support
-  app.use(cors({
-    origin: ["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173", "http://127.0.0.1:3000"],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }));
-  
+
+  // ✅ CORS (FIXED)
+  app.use(
+    cors({
+      origin: [
+        "http://localhost:5173",
+        "https://campus-two-beta.vercel.app"
+      ],
+      credentials: true,
+    })
+  );
+
   app.use(express.json());
 
   // API Routes
@@ -39,20 +36,18 @@ const startServer = async () => {
   app.use("/api/ai", aiRoutes);
   app.use("/api/users", userRoutes);
 
-  // Vite middleware for development
+  // health route
   app.get("/", (req, res) => {
-  res.send("Campus API running");
-});
+    res.send("Campus API running");
+  });
 
   app.use(notFound);
   app.use(errorHandler);
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = Number(process.env.PORT) || 10000;
 
-  httpServer.listen(PORT as number, "0.0.0.0", () => {
-    console.log(
-      `Server running in ${process.env.NODE_ENV || "development"} mode on port ${PORT}`,
-    );
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`);
   });
 };
 
