@@ -25,7 +25,10 @@ const startServer = async () => {
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
         allowedHeaders: ["Content-Type", "Authorization"],
     }));
+    
     app.use(express.json());
+    
+
     // API Routes
     app.use("/api/auth", authRoutes);
     app.use("/api/posts", postRoutes);
