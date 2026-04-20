@@ -29,7 +29,7 @@ const Navbar = () => {
               <Sparkles className="text-white w-5 h-5" />
             </div>
             <span className="font-bold text-lg bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hidden sm:inline">
-              Campus Pulse
+              Campus Connect
             </span>
           </Link>
 
