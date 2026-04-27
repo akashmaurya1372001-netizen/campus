@@ -4,6 +4,7 @@ import api from "../api/axios";
 import { useAuthStore } from "../store/authStore";
 import toast from "react-hot-toast";
 import { User, Mail, Lock, Shield, ArrowRight, Sparkles } from "lucide-react";
+import Logo from "../components/Logo"
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -44,7 +45,7 @@ const Register = () => {
         {/* Header */}
         <div>
           <div className="mx-auto w-16 h-16 bg-linear-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg hover:shadow-xl transition-shadow">
-            <Sparkles className="text-white w-8 h-8" />
+            <Logo />
           </div>
           <h2 className="text-center text-3xl font-bold text-gray-900 tracking-tight">
             Join Campus connect

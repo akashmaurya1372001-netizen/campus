@@ -1,4 +1,5 @@
 import React from "react";
+import Logo from "./Logo"
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 import {
@@ -25,9 +26,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="rounded-2xl " >
-              <img src="src/assets/logoonly.png" alt="" className="rounded-2xl h-16" />
-            </div>
+            <Logo />
             <span className="font-bold text-lg bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hidden sm:inline">
               Campus Connect
             </span>
