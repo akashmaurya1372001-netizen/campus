@@ -1,11 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&family=Parisienne&display=swap');
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-
-
-
 }
 
 * {
@@ -181,3 +179,14 @@ html {
 .shadow-large {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
+ .parisienne-regular {
+  font-family: "Parisienne", "cursive";
+  font-weight: 400;
+  font-style: normal; }
+
+
+
+
+
+
+

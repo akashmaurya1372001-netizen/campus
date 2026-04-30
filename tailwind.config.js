@@ -1,18 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
-</style>
-
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"], // VERY IMPORTANT
   theme: {
     extend: {
-}
-
+      fontFamily: {
+        parisienne: ['Parisienne', 'cursive'],
+      },
     },
-  
+  },
   plugins: [],
-}
+};

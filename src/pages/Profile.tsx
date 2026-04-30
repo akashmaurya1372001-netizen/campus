@@ -5,6 +5,7 @@ import Loader from "../components/Loader";
 import { useAuthStore } from "../store/authStore";
 import toast from "react-hot-toast";
 import { Mail, Shield, Calendar, Zap, Award } from "lucide-react";
+import ImageInput from "../components/profileimg";
 
 const Profile = () => {
   const { user } = useAuthStore();
@@ -50,11 +51,13 @@ const Profile = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
           {/* Avatar */}
           <div
-            className={`w-24 h-24 bg-linear-to-br ${getGradient(user?.role || 'student')} rounded-2xl flex items-center justify-center shrink-0 shadow-lg`}
+           
           >
-            <span className="text-white font-bold text-3xl">
+            <ImageInput />
+          
+            {/* <span className="text-white font-bold text-3xl">
               {getInitials(user?.name || "")}
-            </span>
+            </span> */}
           </div>
 
           {/* Info */}
