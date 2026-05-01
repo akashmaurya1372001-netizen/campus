@@ -46,7 +46,7 @@ const Feed = () => {
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-2">
               {/* <Sparkles className="w-8 h-8 text-blue-600" /> */}
-              <h1 className="text-4xl font-parisienne bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font">
+              <h1 className="text-4xl  bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font">
                 Campus Feed
               </h1>
             </div>
